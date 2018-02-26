@@ -21,25 +21,31 @@ class App extends Component {
 
   render() {
     const { hotels, loading } = this.state
-    loading ? console.log(hotels) : console.log(hotels)
+
     return (
       <div className="App">
         <Title />
-        {loading ? <p>Loading...</p> : 
+
+        {loading ? <p>Loading...</p> :
           hotels.map((hotel, i) =>
-          <div key={i}>
-          <h1>{hotel.Name}</h1>
-              <h2>Star Rating: {hotel.StarRating}</h2>
-              <h2>Facilities:</h2>
-              {hotel.Facilities.map((facilite, i) => 
-              <ul key={i}>{facilite}</ul>
-              )}
-          </div>
-           )
-          }
-       
-
-
+            <div className="section" key={i}>
+              <div className="box">
+                <article className="media">
+                  <div className="media-content">
+                    <div className="content">
+                      <h2><strong>{hotel.Name}</strong></h2>
+                      <h3>Star Rating: {hotel.StarRating}</h3>
+                      <h4>Facilities:</h4>
+                      {hotel.Facilities.map((facilite, i) =>
+                        <ul key={i}>{facilite}</ul>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          )
+        }
       </div>
     );
   }
