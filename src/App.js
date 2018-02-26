@@ -9,7 +9,8 @@ class App extends Component {
     hotels: [],
     parking: false,
     gym: false,
-    pool: false
+    pool: false,
+    starsAcc: true
   }
 
   componentDidMount() {
@@ -30,17 +31,17 @@ class App extends Component {
   }
   hotelsAccending = () => {
     let sorted = this.state.hotels.sort((a, b) => b.StarRating - a.StarRating)
-    this.setState({ hotels: sorted })
+    this.setState({ hotels: sorted, starsAcc: true })
   }
   hotelsDecending = () => {
     let sorted = this.state.hotels.sort((a, b) => a.StarRating - b.StarRating)
-    this.setState({hotels: sorted})
+    this.setState({ hotels: sorted, starsAcc: false })
   }
 
 
 
   render() {
-    const { hotels, loading, gym, pool, parking } = this.state
+    const { hotels, loading, gym, pool, parking, starsAcc } = this.state
 
     let filteredHotels = hotels.filter(hotel => {
       if (!gym && !pool && !parking) return hotel
@@ -54,53 +55,57 @@ class App extends Component {
       if ((gym && !pool && parking) && (hotel.Facilities.includes('gym') && hotel.Facilities.includes('car park'))) return hotel
     })
 
-console.log(filteredHotels)
     return (
       <div className="App">
+
         <Title />
-        <div class="tabs">
-          <ul>
-          Sort By:
-            <li><a onClick={this.hotelsAccending}>Stars Acc</a></li>
-            <li><a onClick={this.hotelsDecending}>Stars Dec</a></li>
-      
-          </ul>
-        </div>
 
-
-        <div className="tile is-ancestor">
-          <div className="tile is-vertical is-10">
-
-            {loading ? <p>Loading...</p> :
-              filteredHotels.map((hotel, i) =>
-                <div className="section" key={i}>
-                  <div className="box">
-                    <article className="media">
-                      <div className="media-content">
-                        <div className="content">
-                          <h2><strong>{hotel.Name}</strong></h2>
-                          <h3>Star Rating: {hotel.StarRating}</h3>
-                          <h4>Facilities:</h4>
-                          {hotel.Facilities.map((facilite, i) =>
-                            <ul key={i}>{facilite}</ul>
-                          )}
-                        </div>
-                      </div>
-                    </article>
-                  </div>
-                </div>
-              )
-            }
-
+        <div className="section">
+          <div className="tabs">
+            <ul>
+              Sort By:
+                  <li className={starsAcc ? "is-active" : ""}><a onClick={this.hotelsAccending}>Stars Ascending</a></li>
+              <li className={starsAcc ? "" : "is-active"}><a onClick={this.hotelsDecending}>Stars Descending</a></li>
+            </ul>
           </div>
-          <div className="tile is-vertical">
-            <div className="section">
-              <h3>Filters</h3>
-              <ul>
-                <li> <label className="checkbox"><input type="checkbox" name="parking" onClick={this.filterParking} />Parking</label></li>
-                <li><label className="checkbox"><input type="checkbox" name="gym" onClick={this.filterGym} />Gym</label></li>
-                <li><label className="checkbox"><input type="checkbox" name="pool" onClick={this.filterPool} />Pool</label></li>
-              </ul>
+
+          <div className="columns">
+            <div className="column is-10">
+              {loading ? <p>Loading...</p> :
+                filteredHotels.map((hotel, i) =>
+                  <div key={i}>
+                    <div className="box">
+                      <article className="media">
+                        <div className="media-content">
+                          <div className="content">
+                            <h2><strong>{hotel.Name}</strong></h2>
+                            <p>Star Rating: {hotel.StarRating}</p>
+                            <p>Facilities:</p>
+                            {hotel.Facilities.length ?
+                              hotel.Facilities.map((facility, i) =>
+                                <ul className="facility-list" key={i}>
+                                  <li>{facility}</li>
+                                </ul>
+                              ) : 'None Available'
+                            }
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                )
+              }
+            </div>
+
+            <div className="column">
+              <div className="filters">
+                <h1>Filters</h1>
+                <ul>
+                  <li><label className="checkbox"><input type="checkbox" name="parking" onClick={this.filterParking} />Parking</label></li>
+                  <li><label className="checkbox"><input type="checkbox" name="gym" onClick={this.filterGym} />Gym</label></li>
+                  <li><label className="checkbox"><input type="checkbox" name="pool" onClick={this.filterPool} />Pool</label></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

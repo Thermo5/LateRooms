@@ -3,3 +3,27 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.box {
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px
+}
+
+
+.hero-body {
+  background-color: blueviolet
+}
+
+
+.section {
+  padding-top: 2px
+}
+
+.filters {
+  text-align: left
+}
+
+.facility-list {
+  margin: 5px
+}
