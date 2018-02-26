@@ -7,9 +7,9 @@ class App extends Component {
   state = {
     loading: true,
     hotels: [],
-    parking: true,
-    gym: true,
-    pool: true,
+    parking: false,
+    gym: false,
+    pool: false,
   }
 
   componentDidMount() {
@@ -19,8 +19,31 @@ class App extends Component {
 
 
 
+  filterGym = () => {
+    this.state.gym ? this.setState({ gym: false }) : this.setState({ gym: true })
+  }
+  filterPool = () => {
+    this.state.pool ? this.setState({ pool: false }) : this.setState({ pool: true })
+  }
+  filterParking = () => {
+    this.state.parking ? this.setState({ parking: false }) : this.setState({ parking: true })
+  }
+
   render() {
-    const { hotels, loading } = this.state
+    const { hotels, loading, gym, pool, parking } = this.state
+
+    let filteredHotels = hotels.filter(hotel => {
+      if (!gym && !pool && !parking) return hotel
+      if (gym && pool && parking) return hotel
+
+      if (gym && !pool && !parking) return hotel.Facilities.includes('gym')
+      if (!gym && pool && !parking) return hotel.Facilities.includes('pool')
+      if (!gym && !pool && parking) return hotel.Facilities.includes('car park')
+
+      if ((!gym && pool && parking) && (hotel.Facilities.includes('pool') && hotel.Facilities.includes('car park'))) return hotel
+      if ((gym && !pool && parking) && (hotel.Facilities.includes('gym') && hotel.Facilities.includes('car park'))) return hotel
+    })
+
 
     return (
       <div className="App">
@@ -30,7 +53,7 @@ class App extends Component {
           <div className="tile is-vertical is-10">
 
             {loading ? <p>Loading...</p> :
-              hotels.map((hotel, i) =>
+              filteredHotels.map((hotel, i) =>
                 <div className="section" key={i}>
                   <div className="box">
                     <article className="media">
@@ -55,9 +78,9 @@ class App extends Component {
             <div className="section">
               <h3>Filters</h3>
               <ul>
-                <li> <label class="radio"><input type="radio" name="parking" />Parking</label></li>
-                <li><label class="radio"><input type="radio" name="gym" />Gym</label></li>
-                <li><label class="radio"><input type="radio" name="pool" />Pool</label></li>
+                <li> <label className="checkbox"><input type="checkbox" name="parking" onClick={this.filterParking} />Parking</label></li>
+                <li><label className="checkbox"><input type="checkbox" name="gym" onClick={this.filterGym} />Gym</label></li>
+                <li><label className="checkbox"><input type="checkbox" name="pool" onClick={this.filterPool} />Pool</label></li>
               </ul>
             </div>
           </div>
