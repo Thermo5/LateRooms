@@ -7,11 +7,11 @@ class Title extends Component {
 
   render() {
     return (
-      <section class="hero is-primary">
-        <div class="hero-body">
-          <div class="container">
-            <h1 class="title">LateRooms</h1>
-            <h2 class="subtitle">
+      <section className="hero is-primary">
+        <div className="hero-body">
+          <div className="container">
+            <h1 className="title">LateRooms</h1>
+            <h2 className="subtitle">
               Hotels
           </h2>
           </div>
