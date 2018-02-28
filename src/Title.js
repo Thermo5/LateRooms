@@ -1,12 +1,8 @@
 
+import React from 'react';
 
-import React, { Component } from 'react';
+const Title = () => (
 
-
-class Title extends Component {
-
-  render() {
-    return (
       <section className="hero is-primary">
         <div className="hero-body">
           <div className="container">
@@ -18,8 +14,5 @@ class Title extends Component {
         </div>
       </section>
     )
-  }
-}
-
 
 export default Title;

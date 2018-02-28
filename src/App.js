@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Title from './Title';
+import Filter from './Filter';
+import HotelList from './HotelList';
 import './App.css';
 import data from './hotels.json';
 
 class App extends Component {
   state = {
-    loading: true,
     hotels: [],
     parking: false,
     gym: false,
@@ -14,20 +15,20 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({ hotels: data, loading: false })
+    this.setState({ hotels: data })
   };
 
-
-
-
   filterGym = () => {
+    console.log('filtergym')
     this.state.gym ? this.setState({ gym: false }) : this.setState({ gym: true })
   }
   filterPool = () => {
     this.state.pool ? this.setState({ pool: false }) : this.setState({ pool: true })
+
   }
   filterParking = () => {
     this.state.parking ? this.setState({ parking: false }) : this.setState({ parking: true })
+
   }
   hotelsAccending = () => {
     let sorted = this.state.hotels.sort((a, b) => b.StarRating - a.StarRating)
@@ -36,14 +37,15 @@ class App extends Component {
   hotelsDecending = () => {
     let sorted = this.state.hotels.sort((a, b) => a.StarRating - b.StarRating)
     this.setState({ hotels: sorted, starsAcc: false })
+
   }
 
 
 
-  render() {
-    const { hotels, loading, gym, pool, parking, starsAcc } = this.state
 
-    let filteredHotels = hotels.filter(hotel => {
+  render() {
+    const { hotels, gym, pool, parking, starsAcc } = this.state
+    let filtered = hotels.filter(hotel => {
       if (!gym && !pool && !parking) return hotel
       if (gym && pool && parking) return hotel
 
@@ -64,48 +66,25 @@ class App extends Component {
           <div className="tabs">
             <ul>
               Sort By:
-                  <li className={starsAcc ? "is-active" : ""}><a onClick={this.hotelsAccending}>Stars Ascending</a></li>
+              <li className={starsAcc ? "is-active" : ""}><a onClick={this.hotelsAccending}>Stars Ascending</a></li>
               <li className={starsAcc ? "" : "is-active"}><a onClick={this.hotelsDecending}>Stars Descending</a></li>
             </ul>
           </div>
 
           <div className="columns">
             <div className="column is-10">
-              {loading ? <p>Loading...</p> :
-                filteredHotels.map((hotel, i) =>
-                  <div key={i}>
-                    <div className="box">
-                      <article className="media">
-                        <div className="media-content">
-                          <div className="content">
-                            <h2><strong>{hotel.Name}</strong></h2>
-                            <p>Star Rating: {hotel.StarRating}</p>
-                            <p>Facilities:</p>
-                            {hotel.Facilities.length ?
-                              hotel.Facilities.map((facility, i) =>
-                                <ul className="facility-list" key={i}>
-                                  <li>{facility}</li>
-                                </ul>
-                              ) : 'None Available'
-                            }
-                          </div>
-                        </div>
-                      </article>
-                    </div>
-                  </div>
-                )
-              }
+              {hotels.length === 0 ? (
+                <p>Loading...</p>
+              ) : (
+                  <HotelList hotels={filtered} />
+                )}
             </div>
-
             <div className="column">
-              <div className="filters">
-                <h1>Filters</h1>
-                <ul>
-                  <li><label className="checkbox"><input type="checkbox" name="parking" onClick={this.filterParking} />Parking</label></li>
-                  <li><label className="checkbox"><input type="checkbox" name="gym" onClick={this.filterGym} />Gym</label></li>
-                  <li><label className="checkbox"><input type="checkbox" name="pool" onClick={this.filterPool} />Pool</label></li>
-                </ul>
-              </div>
+              <Filter
+                filterGym={(this.filterGym)}
+                filterPool={(this.filterPool)}
+                filterParking={(this.filterParking)}
+              />
             </div>
           </div>
         </div>
