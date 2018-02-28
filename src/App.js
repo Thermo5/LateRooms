@@ -18,18 +18,22 @@ class App extends Component {
     this.setState({ hotels: data })
   };
 
-  filterGym = () => {
-    console.log('filtergym')
-    this.state.gym ? this.setState({ gym: false }) : this.setState({ gym: true })
-  }
-  filterPool = () => {
-    this.state.pool ? this.setState({ pool: false }) : this.setState({ pool: true })
 
+  filterFacility = (event) => {
+    this.state[event] ? this.setState({ [event]: false }) : this.setState({ [event]: true })
   }
-  filterParking = () => {
-    this.state.parking ? this.setState({ parking: false }) : this.setState({ parking: true })
 
-  }
+
+  // filterGym = () => {
+  //   console.log('filtergym')
+  //   this.state.gym ? this.setState({ gym: false }) : this.setState({ gym: true })
+  // }
+  // filterPool = () => {
+  //   this.state.pool ? this.setState({ pool: false }) : this.setState({ pool: true })
+  // }
+  // filterParking = () => {
+  //   this.state.parking ? this.setState({ parking: false }) : this.setState({ parking: true })
+  // }
   hotelsAccending = () => {
     let sorted = this.state.hotels.sort((a, b) => b.StarRating - a.StarRating)
     this.setState({ hotels: sorted, starsAcc: true })
@@ -81,9 +85,9 @@ class App extends Component {
             </div>
             <div className="column">
               <Filter
-                filterGym={(this.filterGym)}
-                filterPool={(this.filterPool)}
-                filterParking={(this.filterParking)}
+                filterGym={(this.filterFacility)}
+                filterPool={(this.filterFacility)}
+                filterParking={(this.filterFacility)}
               />
             </div>
           </div>
