@@ -3,7 +3,7 @@
     "Name": "hotelone",
     "StarRating": 5,
     "Facilities": [
-      "car park",
+      "carpark",
       "pool"
     ]
   },
@@ -11,7 +11,7 @@
     "Name": "hoteltwo",
     "StarRating": 3,
     "Facilities": [
-      "car park",
+      "carpark",
       "gym"
     ]
   },

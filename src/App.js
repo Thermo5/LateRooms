@@ -8,10 +8,8 @@ import data from './hotels.json';
 class App extends Component {
   state = {
     hotels: [],
-    parking: false,
-    gym: false,
-    pool: false,
-    starsAcc: true
+    starsAcc: true,
+    filter: { gym: true, pool: true, carpark: true }
   }
 
   componentDidMount() {
@@ -20,21 +18,14 @@ class App extends Component {
 
 
   filterFacility = (event) => {
-    this.state[event] ? this.setState({ [event]: false }) : this.setState({ [event]: true })
+    this.state.filter[event] ? this.setState({
+      filter: Object.assign({}, this.state.filter, { [event]: false, }),
+    }) : this.setState({
+      filter: Object.assign({}, this.state.filter, { [event]: true, }),
+    });
   }
 
-
-  // filterGym = () => {
-  //   console.log('filtergym')
-  //   this.state.gym ? this.setState({ gym: false }) : this.setState({ gym: true })
-  // }
-  // filterPool = () => {
-  //   this.state.pool ? this.setState({ pool: false }) : this.setState({ pool: true })
-  // }
-  // filterParking = () => {
-  //   this.state.parking ? this.setState({ parking: false }) : this.setState({ parking: true })
-  // }
-  hotelsAccending = () => {
+  hotelsAcending = () => {
     let sorted = this.state.hotels.sort((a, b) => b.StarRating - a.StarRating)
     this.setState({ hotels: sorted, starsAcc: true })
   }
@@ -48,18 +39,14 @@ class App extends Component {
 
 
   render() {
-    const { hotels, gym, pool, parking, starsAcc } = this.state
-    let filtered = hotels.filter(hotel => {
-      if (!gym && !pool && !parking) return hotel
-      if (gym && pool && parking) return hotel
-
-      if (gym && !pool && !parking) return hotel.Facilities.includes('gym')
-      if (!gym && pool && !parking) return hotel.Facilities.includes('pool')
-      if (!gym && !pool && parking) return hotel.Facilities.includes('car park')
-
-      if ((!gym && pool && parking) && (hotel.Facilities.includes('pool') && hotel.Facilities.includes('car park'))) return hotel
-      if ((gym && !pool && parking) && (hotel.Facilities.includes('gym') && hotel.Facilities.includes('car park'))) return hotel
-    })
+    const { hotels, starsAcc, filter } = this.state
+    let filtered = hotels.filter(function (hotel) {
+      for (var key in filter) {
+        if ((!filter[key]) && !hotel.Facilities.includes(key) )
+          return false;
+      }
+      return true;
+    });
 
     return (
       <div className="App">
@@ -70,7 +57,7 @@ class App extends Component {
           <div className="tabs">
             <ul>
               Sort By:
-              <li className={starsAcc ? "is-active" : ""}><a onClick={this.hotelsAccending}>Stars Ascending</a></li>
+              <li className={starsAcc ? "is-active" : ""}><a onClick={this.hotelsAcending}>Stars Ascending</a></li>
               <li className={starsAcc ? "" : "is-active"}><a onClick={this.hotelsDecending}>Stars Descending</a></li>
             </ul>
           </div>
