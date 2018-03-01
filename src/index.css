@@ -24,9 +24,12 @@ body {
   text-align: left
 }
 
+
+
 .facility-list {
-  margin: 5px
-}
+  margin-bottom: 1px;
+  margin-top: 0%
+} 
 
 .title {
   text-align: center;

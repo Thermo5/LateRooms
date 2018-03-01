@@ -29,10 +29,10 @@ Once the build process has finished go to [http://localhost:3000/](http://localh
 
 ## Additonal
 Things I would like to improve:
-  * Divide the app into more components to make the code more readable.
+  * Testing is inconclusive as I have not covered React testing before.
   * The Styling could be improved especially on the filter selections.
   * Give the star rating in star icons.
   * Condense the layout so that more information is available on screen.
-  * Make filter elements are mobile responsive.
+  * Make filter elements mobile responsive.
 
 
