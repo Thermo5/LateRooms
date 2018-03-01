@@ -27,3 +27,15 @@ body {
 .facility-list {
   margin: 5px
 }
+
+.title {
+  text-align: center;
+}
+.subtitle {
+  text-align: center;
+}
+
+.filtersHeader {
+  font-size: 20px;
+  font-weight: 600
+}

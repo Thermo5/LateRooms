@@ -33,7 +33,6 @@ Things I would like to improve:
   * The Styling could be improved especially on the filter selections.
   * Give the star rating in star icons.
   * Condense the layout so that more information is available on screen.
-  * Make filter elements are mobile reactive.
-  * Add footer
+  * Make filter elements are mobile responsive.
 
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Title from './Title';
 import Filter from './Filter';
 import HotelList from './HotelList';
-import './App.css';
 import data from './hotels.json';
 
 class App extends Component {
@@ -32,7 +31,6 @@ class App extends Component {
   hotelsDecending = () => {
     let sorted = this.state.hotels.sort((a, b) => a.StarRating - b.StarRating)
     this.setState({ hotels: sorted, starsAcc: false })
-
   }
 
 
@@ -42,7 +40,7 @@ class App extends Component {
     const { hotels, starsAcc, filter } = this.state
     let filtered = hotels.filter(function (hotel) {
       for (var key in filter) {
-        if ((!filter[key]) && !hotel.Facilities.includes(key) )
+        if ((!filter[key]) && !hotel.Facilities.includes(key))
           return false;
       }
       return true;
@@ -50,9 +48,7 @@ class App extends Component {
 
     return (
       <div className="App">
-
         <Title />
-
         <div className="section">
           <div className="tabs">
             <ul>
@@ -61,7 +57,6 @@ class App extends Component {
               <li className={starsAcc ? "" : "is-active"}><a onClick={this.hotelsDecending}>Stars Descending</a></li>
             </ul>
           </div>
-
           <div className="columns">
             <div className="column is-10">
               {hotels.length === 0 ? (
