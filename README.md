@@ -1,4 +1,4 @@
-# LateRooms
+# HotelSearch
 Front-end task for filtering and sorting a given list of hotels.
 
 ## Prerequisites
@@ -13,7 +13,7 @@ To run this project you will need to clone it onto your local machine and instal
 
 Navigate to you chosen directory and run the following command in the commandline to clone the package:
 ```
-    git clone https://github.com/Thermo5/lateRooms.git
+    
 ```
 
 To install all depencency run:
